@@ -16,6 +16,7 @@ public class NoeudPersonne {
     List<NoeudPersonne> enfants;
     List<NoeudPersonne> freresSoeurs;
 
+    //Constructeur
     public NoeudPersonne(int idPersonne, String nomPersonne, String prenomsPersonne, Date dateNaissance, char sexePersonne, NoeudPersonne parent) {
         this.idPersonne = idPersonne;
         this.nomPersonne = nomPersonne;
@@ -25,7 +26,7 @@ public class NoeudPersonne {
         this.parent = parent;
     }
 
-
+//Les gatters et les setters
     public int getIdPersonne() {
         return idPersonne;
     }
@@ -91,7 +92,7 @@ public class NoeudPersonne {
     }
 
 
-    //Methodes
+    //Les methodes
     //Affichage de l'arbre généalogique
     public void afficherArbreGenealogique(){
 
