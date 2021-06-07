@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 public class NoeudPersonne {
@@ -10,22 +11,54 @@ public class NoeudPersonne {
     private int idPersonne;
     String nomPersonne;
     String prenomsPersonne;
-    Date dateNaissance;
+    String dateNaissance;
     char sexePersonne;
     NoeudPersonne parent;
     List<NoeudPersonne> enfants;
     List<NoeudPersonne> freresSoeurs;
+    public NoeudPersonne root;
+    public static int nbreNoeud=0;
 
-    //Constructeur
-    public NoeudPersonne(int idPersonne, String nomPersonne, String prenomsPersonne, Date dateNaissance, char sexePersonne, NoeudPersonne parent) {
-        this.idPersonne = idPersonne;
-        this.nomPersonne = nomPersonne;
-        this.prenomsPersonne = prenomsPersonne;
-        this.dateNaissance = dateNaissance;
-        this.sexePersonne = sexePersonne;
-        this.parent = parent;
+    //Contructeur du root
+    public NoeudPersonne() {
+        this.idPersonne = 0;
+        this.nomPersonne = "root";
+        this.prenomsPersonne = null;
+        this.dateNaissance = "01/01/vers ";
+        this.sexePersonne = 'N';
     }
 
+    //Constructeur
+    public NoeudPersonne(int idPersonne, String nomPersonne, String prenomsPersonne, String dateNaissance, char sexePersonne, NoeudPersonne parent) {
+        if (nbreNoeud == 0) {
+            //creation du root s'il nexiste pas
+            creationRoot();
+            //et creation de l'objet
+            this.idPersonne = idPersonne;
+            this.nomPersonne = nomPersonne;
+            this.prenomsPersonne = prenomsPersonne;
+            this.dateNaissance = dateNaissance;
+            this.sexePersonne = sexePersonne;
+            if (this.parent == null) {
+                this.parent = root;
+            } else {
+                this.parent = parent;
+            }
+            nbreNoeud++;
+        } else {
+            this.idPersonne = idPersonne;
+            this.nomPersonne = nomPersonne;
+            this.prenomsPersonne = prenomsPersonne;
+            this.dateNaissance = dateNaissance;
+            this.sexePersonne = sexePersonne;
+            if (this.parent == null) {
+                this.parent = root;
+            } else {
+                this.parent = parent;
+            }
+            nbreNoeud++;
+        }
+    }
 //Les gatters et les setters
     public int getIdPersonne() {
         return idPersonne;
@@ -51,11 +84,11 @@ public class NoeudPersonne {
         this.prenomsPersonne = prenomsPersonne;
     }
 
-    public Date getDateNaissance() {
+    public String getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(String dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
@@ -138,5 +171,11 @@ public class NoeudPersonne {
 
     }
 
+    public void creationRoot(){
+        root=new NoeudPersonne();
+    }
+    public void AfficherNoeud(){
+        System.out.println("id"+this.getIdPersonne()+"\n nom :"+this.getNomPersonne()+" \n prenom :"+this.getPrenomsPersonne()+"\n sexe :"+this.getSexePersonne()+"\n date naissance: "+this.getDateNaissance()+"\n parent :"+this.getParent().getNomPersonne());
+    }
 
 }
