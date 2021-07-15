@@ -1,66 +1,34 @@
 package com.company;
 
+//import com.sun.deploy.nativesandbox.NativeSandboxOutputStream;
+
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
-
-public class NoeudPersonne {
-
+public class NoeudPersonne implements Serializable{
     //Attributs
-    private int idPersonne;
+    public int idPersonne;
     String nomPersonne;
     String prenomsPersonne;
     String dateNaissance;
-    char sexePersonne;
+    String sexePersonne;
     NoeudPersonne parent;
     ArrayList<NoeudPersonne> enfants;
     ArrayList<NoeudPersonne> freresSoeurs;
     public static NoeudPersonne root;
-    public static int nbreNoeud = 0;
-    public static ArrayList<NoeudPersonne> ArbreComplet;
 
-    public static ArrayList<NoeudPersonne> Abre = new ArrayList<NoeudPersonne>();
-
-    //Contructeur du root
-    public NoeudPersonne() {
-        this.idPersonne = 0;
-        this.nomPersonne = "root";
-        this.prenomsPersonne = "null";
-        this.dateNaissance = "01/01/vers ";
-        this.sexePersonne = 'N';
-        this.parent = this;
-        this.enfants= new ArrayList<NoeudPersonne>() ;
-        AddNoeud(this);
-
-    }
-
-    //Constructeur
-    public NoeudPersonne(int idPersonne, String nomPersonne, String prenomsPersonne, String dateNaissance, char sexePersonne, NoeudPersonne parent) {
-        if (nbreNoeud == 0) {
+    public NoeudPersonne(int idPersonne, String nomPersonne, String prenomsPersonne, String dateNaissance, String sexePersonne, NoeudPersonne parent) {
+        if (idPersonne== 0) {
             //creation du root s'il nexiste pas
-            creationRoot();
-            nbreNoeud++;
-
-            //et creation de l'objet
-            this.idPersonne = idPersonne;
+            this.idPersonne = 0;
             this.nomPersonne = nomPersonne;
             this.prenomsPersonne = prenomsPersonne;
             this.dateNaissance = dateNaissance;
             this.sexePersonne = sexePersonne;
             this.enfants=new ArrayList<NoeudPersonne>();
             this.freresSoeurs=new ArrayList<NoeudPersonne>();
-            if (parent == null) {
-                this.parent = root;
-                AjoutAListeDenfants(this.parent, this);
-                AjoutFreresSoeurs(this.parent,this);
-            } else {
-                this.parent = parent;
-                AjoutAListeDenfants(this.parent,this);
-                AjoutFreresSoeurs(this.parent,this);
-            }
-
+            this.parent = this;
+            this.freresSoeurs=new ArrayList<NoeudPersonne>();
         } else {
             this.idPersonne = idPersonne;
             this.nomPersonne = nomPersonne;
@@ -69,20 +37,22 @@ public class NoeudPersonne {
             this.sexePersonne = sexePersonne;
             this.enfants=new ArrayList<NoeudPersonne>();
             this.freresSoeurs=new ArrayList<NoeudPersonne>();
-            //System.out.print(parent+"\n");
             if (parent == null) {
-                this.parent = root;
-                AjoutAListeDenfants(this.parent,this);
-                AjoutFreresSoeurs(this.parent,this);
+                this.parent = parent;
+                //AjoutAListeDenfants(this.parent,this);
+                //AjoutFreresSoeurs(this.parent,this);
             } else {
                 this.parent = parent;
-                AjoutAListeDenfants(this.parent,this);
-                AjoutFreresSoeurs(this.parent,this);
+                //AjoutAListeDenfants(this.parent,this);
+                //AjoutFreresSoeurs(this.parent,this);
             }
-            nbreNoeud++;
         }
-        AddNoeud(this);
     }
+    public void EditionEnfant(){
+
+    }
+
+
 
     //Les getters et les setters
     public int getIdPersonne() {
@@ -117,11 +87,11 @@ public class NoeudPersonne {
         this.dateNaissance = dateNaissance;
     }
 
-    public char getSexePersonne() {
+    public String getSexePersonne() {
         return sexePersonne;
     }
 
-    public void setSexePersonne(char sexePersonne) {
+    public void setSexePersonne(String sexePersonne) {
         this.sexePersonne = sexePersonne;
     }
 
@@ -149,154 +119,183 @@ public class NoeudPersonne {
         this.freresSoeurs = freresSoeurs;
     }
 
+    public void Ascendant(){
 
-    //Les methodes
-    //Affichage de l'arbre généalogique
-    public void afficherArbreGenealogique() {
-
-    }
-
-
-    //Affichage la liste des enfants
-    public void afficherListeEnfants(int id) {
+    };
+    public void Aine(NoeudPersonne a){
 
     }
 
-    //Editer la liste des enfants
-    public void editerListeEnfants(int id) {
+    public static void frereSoeur(){
+
+    }
+    public void ascendant(){
+
+
+    }
+    public void descendant(){
+
 
     }
 
-
-    //Affichage des frères et soeurs d'une personne
-
-    public void afficherFresSoeurs(int id) {
-
+    public void frereAine(){
+        if (!(this.freresSoeurs).isEmpty()) {
+            System.out.println("A pour frere aine : "+this.freresSoeurs.get(0).getNomPersonne()+" "+this.freresSoeurs.get(0).getPrenomsPersonne());
+        }else {
+            System.out.println("pas de freres ni de soeur");
+        }
     }
 
 
-    //Affichage de cousins et cousines d'une personne
-    public void afficherCousinsCousines(int id) {
-
-    }
-
-
-    //Edition des ascendants d'une personne
-    public void editerAscendants(int id) {
-
-    }
-
-    //Edition du nom du frère ainés d'une personne
-    public void editerFrereAine(int id) {
-
-    }
-
-    public void editerLienParente(int id1, int id2) {
-
-    }
-
-    public void creationRoot() {
-        root = new NoeudPersonne();
-    }
-
-    public void AfficherNoeud() {
-        System.out.println("id :" + this.getIdPersonne() + "\n nom :" + this.getNomPersonne() + " \n prenom :" + this.getPrenomsPersonne() + "\n sexe :" + this.getSexePersonne() + "\n date naissance: " + this.getDateNaissance() + "\n parent :" + getParent().getNomPersonne());
-    }
-
-    public void AddNoeud(NoeudPersonne n) {
-        Abre.add(n);
-    }
-
-    public void AjoutAListeDenfants(NoeudPersonne pere, NoeudPersonne enf) {
-        Abre.forEach((n)->{
-            if(n==pere){
-               System.out.println(enf.getNomPersonne()+" "+n.getNomPersonne());
-               n.enfants.add(enf);
-            }
-        });
-       //parent.enfants.add(enf);
-    }
-
-    public void AjoutFreresSoeurs(NoeudPersonne pere, NoeudPersonne enf) {
-        Abre.forEach((n)->{
-            if(n==pere){
-               // System.out.println(enf.getNomPersonne()+" "+n.getNomPersonne());
-                n.enfants.forEach((m)->{
-                    if(m!=enf){
-                        m.freresSoeurs.add(enf);
-                        enf.freresSoeurs.add(m);
-                    }
-
-                });
-            }
-        });
-    }
     public void AfiichageCousin(){
-        if(this.parent.getIdPersonne()==0){
+        if(this.parent.getIdPersonne()==0) {
             System.out.println("Pas de cousin");
-        }else if(this.getIdPersonne()==0){
+        }else if(this.parent.getIdPersonne()==0) {
+            System.out.println("Pas de cousin");
+        }else if(this.getParent().getFreresSoeurs().isEmpty()){
+            System.out.println("Pas de cousin");
+        }
+        else if(this.getIdPersonne()==0){
             System.out.println("pas de cousin");
         }else{
             NoeudPersonne grandPere=this.parent.parent;
-            NoeudPersonne papa =this.parent;
-            Abre.forEach((n)->{
-                if(n==grandPere){
-                    // System.out.println(enf.getNomPersonne()+" "+n.getNomPersonne());
-                    n.enfants.forEach((m)->{
-                        if(m!=papa){
-                            m.enfants.forEach((p)->System.out.println(p.getNomPersonne()));
-                        }
-                    });
+            grandPere.getEnfants().forEach((m)-> {
+                if (m.getIdPersonne() != this.getParent().getIdPersonne()){
+                    if(m.getEnfants()==null){
+                        System.out.println(this.getNomPersonne()+" n'a pas de cousin");
+                    }else{
+                        m.getEnfants().forEach((p) -> {
+                            if (p.getIdPersonne() != this.getIdPersonne()) {
+                                System.out.println("           id : " + p.getIdPersonne() + " Nom : " + p.getNomPersonne() + " Prenom : " + p.getPrenomsPersonne());
+                            }
+                        });
+                    }
                 }
             });
-
         }
     }
-    public void descendantPersonne(){
-        NoeudPersonne personne=this;
-        if(personne.enfants.isEmpty()){
-            System.out.println("pas de descendant");
+
+    public void AfiichageCousinExistant(){
+        if(this.parent.getIdPersonne()==0){
+
+        }else if(this.getIdPersonne()==0){
+
         }else{
-            personne.enfants.forEach((n)->
-                    {
-                        System.out.println(n.getNomPersonne());
-                        if(!(n.enfants.isEmpty())){
-                            n.descendantPersonne();
-                        }
-                   }
-            );
-
+            NoeudPersonne grandPere=this.parent.parent;
+            grandPere.getEnfants().forEach((m)-> {
+                if (m.getIdPersonne() != this.getParent().getIdPersonne()){
+                    if(m.getEnfants()==null){
+                    }else{
+                        m.getEnfants().forEach((p) -> {
+                            if (p.getIdPersonne() != this.getIdPersonne()) {
+                                System.out.println("             code :"+p.getIdPersonne() + "  " + p.getNomPersonne() + "   " + p.getNomPersonne());
+                            }
+                        });
+                    }
+                }
+            });
         }
     }
+
+    public void ListeCousinVerification(NoeudPersonne b){
+        if(this.parent.getIdPersonne()==0){
+
+        }else if(this.getIdPersonne()==0){
+
+        }else{
+            NoeudPersonne grandPere=this.parent.parent;
+            grandPere.getEnfants().forEach((m)-> {
+                if (m.getIdPersonne() != this.getParent().getIdPersonne()){
+                    if(m.getEnfants()==null){
+
+                    }else{
+                        m.getEnfants().forEach((p) -> {
+                            if (p.getIdPersonne() != this.getIdPersonne()) {
+                                if(p==b){
+                                    System.out.println("oui");
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+
 
     public void ascendantPersonne(){
-        NoeudPersonne personne=this;
-        if(personne.parent.getIdPersonne()==0){
-            System.out.println("root ");
+        if(this.parent.getIdPersonne()==0){
+            System.out.println("  root ");
         }else{
-            System.out.println(personne.parent.getNomPersonne());
-            personne.parent.AfiichageCousin();
-            personne.parent.freresSoeurs.forEach((n)->
+            System.out.println("  Code : "+this.parent.getIdPersonne()+"   "+this.parent.getNomPersonne()+"  "+this.parent.getPrenomsPersonne());
+            //this.parent.AfiichageCousinExistant();
+            this.parent.freresSoeurs.forEach((n)->
                     {
-                        System.out.println(n.getNomPersonne());
+                        System.out.println("           Code : "+n.getIdPersonne()+"   "+n.getNomPersonne()+"   "+n.getPrenomsPersonne());
                     }
-                     );
-            personne.parent.ascendantPersonne();
-
-
+            );
+            this.parent.ascendantPersonne();
         }
     }
-    public void frereAine(){
 
-        NoeudPersonne personne=this;
-        Abre.forEach((n)->{
-            if(n==personne) {
-                if (!(n.freresSoeurs).isEmpty()) {
-                    System.out.println(n.freresSoeurs.get(0).getNomPersonne());
-                }else{
-                    System.out.println("pas de freres ni de soeur");
-                }
-            }
-        });
+    static public String r="";
+/*
+    public void AffichageEnfant(){
+        if(this.getEnfants()==null){
+            System.out.println("");
+        }else{
+            this.getEnfants().forEach((n)->
+                    {
+                        System.out.println("Code : "+n.getIdPersonne()+"   "+n.getNomPersonne()+"   "+n.getPrenomsPersonne());
+                    }
+            );
+        }
     }
+*/
+    public void AffichageGraphe(){
+        if(this.getEnfants()==null){
+            System.out.println(" ");
+        }else{
+            this.getEnfants().forEach((n)->
+                    {
+                        r=r+" ++++++ ";
+                        System.out.println("Code : "+n.getIdPersonne()+"   "+n.getNomPersonne()+"   "+n.getPrenomsPersonne());
+                        n.AffichageGraphe();
+                    }
+
+            );
+        }
+        r="";
+
+
+    }
+
+    public void RechercheLien(NoeudPersonne b){
+        if(this.getParent()==b){
+            System.out.println(this.getNomPersonne()+" "+this.getPrenomsPersonne()+"  est le fils ou la fille de : "+b.getNomPersonne()+" "+b.getPrenomsPersonne());
+        }else if((this.getFreresSoeurs().contains(b))){
+            System.out.println((this.getNomPersonne()+" "+this.getPrenomsPersonne()+"  est le frère ou la soeur de : "+b.getNomPersonne()+" "+b.getPrenomsPersonne()));
+        }else if((this.getEnfants().contains(b))){
+            System.out.println(this.getNomPersonne()+" "+this.getPrenomsPersonne()+"  est le père ou la mere de : "+b.getNomPersonne()+" "+b.getPrenomsPersonne());
+        }else if(b.getParent()==this){
+            System.out.println(b.getNomPersonne()+" "+b.getPrenomsPersonne()+"  est le fils ou la fille de : "+this.getNomPersonne()+" "+this.getPrenomsPersonne());
+        }else if((this.getEnfants().contains(b))){
+            System.out.println(b.getNomPersonne()+" "+b.getPrenomsPersonne()+"  est le père de ou la mere : "+this.getNomPersonne()+" "+this.getPrenomsPersonne());
+        }else if(this.getParent().getParent()==b.getParent().getParent()){
+            System.out.println(b.getNomPersonne()+" "+b.getPrenomsPersonne()+"  est le cousin ou la cousine de : "+this.getNomPersonne()+" "+this.getPrenomsPersonne());
+        }else if(this.getParent().getParent()==b){
+            System.out.println(b.getNomPersonne()+" "+b.getPrenomsPersonne()+"  est le grand père ou la grande mère de : "+this.getNomPersonne()+" "+this.getPrenomsPersonne());
+        }else if(b.getParent().getParent()==this){
+            System.out.println(this.getNomPersonne()+" "+this.getPrenomsPersonne()+"  est le grand père ou la grande mère de : "+b.getNomPersonne()+" "+b.getPrenomsPersonne());
+        }else if((b.getParent().getFreresSoeurs().contains(this.getParent())) ){
+            System.out.println(this.getNomPersonne()+" "+this.getPrenomsPersonne()+"  est le neuveu ou la nièce de : "+b.getNomPersonne()+" "+b.getPrenomsPersonne());
+        }else if(!(this.getParent().getFreresSoeurs().contains(b.getParent())) ){
+            System.out.println(b.getNomPersonne()+" "+b.getPrenomsPersonne()+"  est le neuveu ou la nièce de : "+this.getNomPersonne()+" "+this.getPrenomsPersonne());
+        }else{
+            System.out.println("Le lien entre  "+b.getNomPersonne()+" "+b.getPrenomsPersonne()+" et "+this.getNomPersonne()+" "+this.getPrenomsPersonne()+" est un lien lointain");
+        }
+
+    }
+
 }
+

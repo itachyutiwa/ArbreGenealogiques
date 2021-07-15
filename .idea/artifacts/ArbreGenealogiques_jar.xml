@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ArbreGenealogiques:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ArbreGenealogiques_jar</output-path>
+    <root id="archive" name="ArbreGenealogiques.jar">
+      <element id="module-output" name="ArbreGenealogiques" />
+    </root>
+  </artifact>
+</component>
